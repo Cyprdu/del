@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Week-end Dieu est Là 2026 | Bourg-en-Bresse</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,6 +22,7 @@
             --light: #f9f9f9;
             --white: #ffffff;
             --text: #333333;
+            --pink: #e91e63; /* Rose pour le tract */
             --gradient: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
         }
 
@@ -30,6 +31,7 @@
             padding: 0;
             box-sizing: border-box;
             scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -37,6 +39,7 @@
             color: var(--text);
             background-color: var(--light);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         h1, h2, h3, h4 {
@@ -44,7 +47,63 @@
             font-weight: 700;
         }
 
-        /* Hero Section */
+        /* --- TRANSITION LOGO --- */
+        #loader-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--dark);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loader-logo {
+            width: 150px;
+            animation: pulseLogo 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulseLogo {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.8); opacity: 0.5; }
+        }
+
+        /* --- PAGE INSCRIPTION PLEIN ÉCRAN --- */
+        #registration-page {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            z-index: 9999;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .reg-header {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .close-reg { 
+            font-size: 1.2rem; 
+            font-weight: bold;
+            cursor: pointer; 
+            color: var(--primary); 
+            padding: 5px 15px;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 20px;
+        }
+
+        .iframe-wrapper { flex-grow: 1; -webkit-overflow-scrolling: touch; overflow-y: scroll; }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /* --- HERO SECTION --- */
         .hero {
             height: 100vh;
             display: flex;
@@ -67,7 +126,6 @@
             z-index: 1;
         }
 
-        /* Vidéo en arrière-plan floutée pour l'ambiance */
         .hero-video-bg {
             position: absolute;
             top: 50%; left: 50%;
@@ -77,12 +135,14 @@
             opacity: 0.3;
             z-index: 0;
             filter: blur(5px);
+            object-fit: cover;
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
             max-width: 800px;
+            width: 100%;
         }
 
         .hero-content h1 {
@@ -123,6 +183,8 @@
             transition: all 0.3s ease;
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
             border: 2px solid var(--white);
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
         }
 
         .btn:hover {
@@ -132,7 +194,7 @@
             color: var(--white);
         }
 
-        /* Sections communes */
+        /* --- SECTIONS COMMUNES --- */
         section {
             padding: 80px 20px;
             max-width: 1200px;
@@ -157,13 +219,14 @@
             border-radius: 2px;
         }
 
-        /* Teaser Video */
+        /* --- PRESENTATION & VIDEO --- */
         .video-container {
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             max-width: 900px;
             margin: 0 auto 50px;
+            background: #000;
         }
 
         video {
@@ -171,7 +234,6 @@
             display: block;
         }
 
-        /* Presentation */
         .presentation-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -191,7 +253,7 @@
             margin-bottom: 20px;
         }
 
-        /* Galerie Photos */
+        /* --- GALERIE --- */
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -231,7 +293,7 @@
             transform: translateY(0);
         }
 
-        /* Infos Pratiques */
+        /* --- INFOS PRATIQUES --- */
         .infos-pratiques {
             background: var(--dark);
             color: var(--white);
@@ -264,46 +326,24 @@
             gap: 10px;
         }
 
-        .info-card ul {
-            list-style-type: none;
-        }
-
-        .info-card ul li {
-            margin-bottom: 10px;
-            position: relative;
-            padding-left: 25px;
-        }
-
+        .info-card ul { list-style-type: none; }
+        .info-card ul li { margin-bottom: 10px; position: relative; padding-left: 25px; }
         .info-card ul li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--secondary);
-            font-weight: bold;
+            content: '✓'; position: absolute; left: 0; color: var(--secondary); font-weight: bold;
         }
         
-        .alert-card {
-            border: 2px solid var(--primary);
-            background: rgba(255, 107, 107, 0.1);
-        }
+        .alert-card { border: 2px solid var(--primary); background: rgba(255, 107, 107, 0.1); }
         .alert-card ul li::before { content: '⚠️'; color: var(--primary); }
 
-        /* Inscription */
-        .inscription-section {
-            text-align: center;
-        }
-        
-        .iframe-container {
-            width: 100%;
-            height: 600px;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-top: 30px;
-            border: 2px solid var(--primary);
+        .tract-link {
+            color: var(--pink) !important;
+            font-weight: bold;
+            text-decoration: underline;
+            display: inline-block;
+            margin-top: 15px;
         }
 
-        /* Footer */
+        /* --- FOOTER --- */
         footer {
             background: #1a1a1a;
             color: var(--white);
@@ -333,30 +373,41 @@
             text-decoration: none;
         }
 
-        .social-links a:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-        }
+        .social-links a:hover { background: var(--primary); transform: translateY(-3px); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; font-size: 0.9rem; color: #888; }
 
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 20px;
-            font-size: 0.9rem;
-            color: #888;
-        }
-
-        /* Responsive */
+        /* --- RESPONSIVE MOBILE --- */
         @media (max-width: 768px) {
             .hero-content h1 { font-size: 2.5rem; }
+            .section-title { font-size: 2rem; }
+            section { padding: 50px 15px; }
             .presentation-grid { grid-template-columns: 1fr; }
-            .hero-content .infos { font-size: 1rem; display: flex; flex-direction: column; gap: 5px;}
+            .hero-content .infos { font-size: 1rem; display: flex; flex-direction: column; gap: 5px; border-radius: 15px;}
+            .text-box { padding: 25px; }
         }
     </style>
 </head>
 <body>
 
+    <div id="loader-overlay">
+        <img src="https://github.com/Cyprdu/PaJe/blob/main/img/309026698_198200479239512_8250121211039023814_n.png?raw=true" class="loader-logo" alt="Logo PaJe">
+    </div>
+
+    <div id="registration-page">
+        <div class="reg-header">
+            <span style="font-weight: bold; color: var(--dark); font-family: 'Montserrat', sans-serif;">Inscription au Week-end</span>
+            <div class="close-reg" onclick="closeRegistration()">
+                <i class="fa-solid fa-arrow-left"></i> Retour au site
+            </div>
+        </div>
+        <div class="iframe-wrapper">
+            <iframe src="https://weekenddieuestla2026-bourg.venio.fr/fr"></iframe>
+        </div>
+    </div>
+
     <header class="hero">
-        <video class="hero-video-bg" autoplay muted loop playsinline>
+        <video class="hero-video-bg" autoplay muted loop playsinline poster="https://github.com/Cyprdu/PaJe/raw/refs/heads/main/img/DSC00736.jpeg">
+            <source src="https://moncamp.fr/video/1127.webm" type="video/webm">
             <source src="https://moncamp.fr/video/1126.mp4" type="video/mp4">
         </video>
         <div class="hero-content" data-aos="zoom-in" data-aos-duration="1000">
@@ -365,18 +416,18 @@
             <div class="infos">
                 <span><i class="fa-solid fa-calendar-days"></i> 2 - 3 Mai 2026</span> &nbsp;|&nbsp; 
                 <span><i class="fa-solid fa-location-dot"></i> Bourg-en-Bresse</span> &nbsp;|&nbsp;
-                <span><i class="fa-solid fa-user-group"></i> 12 - 17 ans (5ème à Terminale)</span>
+                <span><i class="fa-solid fa-user-group"></i> 12 - 17 ans</span>
             </div>
             <br>
-            <a href="#inscription" class="btn">Je m'inscris !</a>
+            <button class="btn" onclick="openRegistration()">Je m'inscris !</button>
         </div>
     </header>
 
     <section id="presentation">
         <div class="video-container" data-aos="fade-up">
-            <video controls poster="https://github.com/Cyprdu/PaJe/raw/refs/heads/main/img/DSC00736.jpeg">
-                <source src="https://moncamp.fr/video/1126.mp4" type="video/mp4">
+            <video controls playsinline preload="metadata" poster="https://github.com/Cyprdu/PaJe/raw/refs/heads/main/img/DSC00736.jpeg">
                 <source src="https://moncamp.fr/video/1127.webm" type="video/webm">
+                <source src="https://moncamp.fr/video/1126.mp4" type="video/mp4">
                 Votre navigateur ne supporte pas la balise vidéo.
             </video>
         </div>
@@ -384,7 +435,7 @@
         <div class="presentation-grid">
             <div class="text-box" data-aos="fade-right">
                 <h2 style="color: var(--primary); margin-bottom: 20px;">L'expérience de la Présence de Dieu</h2>
-                <p>Depuis 2018, la Pastorale des Jeunes propose des week-ends "Dieu est Là" destinés aux adolescents, pour ouvrir les jeunes à l'expérience de la Présence de Dieu et la possibilité de le rencontrer dans la Foi.</p>
+                <p>Depuis 2018, la Pastorale des Jeunes propose des week-ends "Dieu est Là" destinés aux adolescents de 12 à 17 ans (de la 5ème à la Terminale), pour ouvrir les jeunes à l'expérience de la Présence de Dieu et la possibilité de le rencontrer dans la Foi.</p>
                 <p>Prendre un temps avec d'autres jeunes, pour rencontrer Jésus, apprendre à vivre de Lui afin de pouvoir témoigner des merveilles qu'Il fait dans nos vies.</p>
                 <p><strong>Venez expérimenter la joie de l'Esprit Saint !</strong></p>
             </div>
@@ -428,7 +479,9 @@
             </div>
         </div>
         <div style="text-align: center; margin-top: 30px;" data-aos="fade-up">
-            <a href="https://www.amazon.fr/photos/share/8XfLaQKoixQhEl1JS6WZYIsqlhMtpXR5mOGLpOwbNPx" target="_blank" class="btn" style="background: var(--dark); color: white; border-color: var(--dark);">Voir l'album du précédent Week-end (Gex 2024)</a>
+            <a href="https://www.amazon.fr/photos/share/8XfLaQKoixQhEl1JS6WZYIsqlhMtpXR5mOGLpOwbNPx" target="_blank" class="btn" style="background: var(--dark); color: white; border-color: var(--dark);">
+                Voir l'album d'un des précédents Week-end (Gex 2024)
+            </a>
         </div>
     </section>
 
@@ -448,9 +501,8 @@
                 <h3><i class="fa-solid fa-suitcase"></i> Dans la valise</h3>
                 <ul>
                     <li>Draps / duvet / oreiller</li>
-                    <li>Vêtements pour le week-end</li>
-                    <li>Affaires de toilette</li>
-                    <li>Pique-nique pour le repas du samedi midi</li>
+                    <li>Vêtements et affaires de toilette</li>
+                    <li>Pique-nique pour le samedi midi</li>
                     <li>Ordonnance du médecin (si traitement)</li>
                 </ul>
             </div>
@@ -463,22 +515,22 @@
         </div>
     </div>
 
-    <section id="inscription" class="inscription-section">
+    <section id="inscription" class="inscription-section" style="text-align: center;">
         <h2 class="section-title" data-aos="fade-up">S'inscrire</h2>
         <div class="text-box" style="max-width: 800px; margin: 0 auto;" data-aos="fade-up">
             <p><strong>Date limite d'inscription :</strong> 26 avril 2026</p>
             <p>L'inscription ne sera effective qu'à réception de tous les documents. Le paiement peut avoir lieu en arrivant sur place le vendredi 1/05.</p>
             
             <div style="margin: 30px 0;">
-                <a href="https://weekenddieuestla2026-bourg.venio.fr/fr" target="_blank" class="btn" style="background: var(--primary); color: white; font-size: 1.5rem; width: 100%;">
+                <button class="btn" style="background: var(--primary); color: white; font-size: 1.5rem; width: 100%; border:none;" onclick="openRegistration()">
                     <i class="fa-solid fa-ticket"></i> Accéder à la billetterie
-                </a>
+                </button>
             </div>
-            <p><a href="https://catholique-belley-ars.fr/jeunes-familles/la-pastorale-des-jeunes/collegiens-lyceens/we-dieu-est-la-1/Tract-paje-we-dieu-est-la.pdf" target="_blank" style="color: var(--secondary); font-weight: bold;"><i class="fa-solid fa-file-pdf"></i> Télécharger le tract officiel</a></p>
-        </div>
-
-        <div class="iframe-container" data-aos="zoom-in">
-            <iframe src="https://weekenddieuestla2026-bourg.venio.fr/fr" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+            <p>
+                <a href="https://catholique-belley-ars.fr/jeunes-familles/la-pastorale-des-jeunes/collegiens-lyceens/we-dieu-est-la-1/Tract-paje-we-dieu-est-la.pdf" target="_blank" class="tract-link">
+                    <i class="fa-solid fa-file-pdf"></i> Télécharger le tract officiel
+                </a>
+            </p>
         </div>
     </section>
 
@@ -511,10 +563,40 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // Initialisation des animations au scroll
         AOS.init({
-            once: true, // L'animation ne se joue qu'une fois
-            offset: 100 // Déclenche l'animation un peu avant que l'élément ne soit visible
+            once: true,
+            offset: 100
         });
+
+        // Gestion de la transition vers la page d'inscription
+        function openRegistration() {
+            const loader = document.getElementById('loader-overlay');
+            const regPage = document.getElementById('registration-page');
+            
+            // 1. Apparition de l'écran de chargement avec le logo
+            loader.style.display = 'flex';
+            
+            // 2. Lancement de l'Iframe en fond après 1.5s
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                loader.style.transition = 'opacity 0.5s ease';
+                regPage.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Bloque le scroll du site principal
+                
+                // 3. Masquer complètement le loader une fois invisible
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    loader.style.opacity = '1';
+                }, 500);
+            }, 1500);
+        }
+
+        // Fermer la page d'inscription et revenir au site
+        function closeRegistration() {
+            document.getElementById('registration-page').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Réactive le scroll
+        }
     </script>
 </body>
 </html>
